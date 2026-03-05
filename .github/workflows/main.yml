@@ -2,12 +2,11 @@ name: Key Auto Update
 
 on:
   schedule:
-    # Qui decidi il tempo. Esempi:
-    # '*/5 * * * *'  = Ogni 5 minuti
-    # '0 * * * *'    = Ogni ora
-    # '0 0 * * *'    = Ogni giorno a mezzanotte
-    - cron: '*/5 * * * *' 
-  workflow_dispatch: # Ti permette di avviarlo anche a mano per testare
+    - cron: '*/5 * * * *'  # Tenta ogni 5 minuti
+  workflow_dispatch:      # <--- Questo ti permette di avviarlo a mano per test
+  push:                   # <--- Questo lo avvia ogni volta che modifichi un file
+    branches:
+      - main
 
 jobs:
   build:
