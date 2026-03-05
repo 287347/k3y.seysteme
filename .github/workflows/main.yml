@@ -1,0 +1,31 @@
+name: Key Auto Update
+
+on:
+  schedule:
+    # Qui decidi il tempo. Esempi:
+    # '*/5 * * * *'  = Ogni 5 minuti
+    # '0 * * * *'    = Ogni ora
+    # '0 0 * * *'    = Ogni giorno a mezzanotte
+    - cron: '*/5 * * * *' 
+  workflow_dispatch: # Ti permette di avviarlo anche a mano per testare
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run update script
+        env:
+          MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: python update_key.py
